@@ -11,11 +11,13 @@
         <div class="items__inner">
 
             <div class="items__tabs">
-                <a class="items__tab items__tab--active" href="{{ route('items.index') }}">
+                <a class="items__tab {{ request('page') !== 'mylist' ? 'items__tab--active' : '' }}"
+                    href="{{ route('items.index') }}">
                     おすすめ
                 </a>
 
-                <a class="items__tab" href="{{ route('items.index', ['page' => 'mylist']) }}">
+                <a class="items__tab {{ request('page') === 'mylist' ? 'items__tab--active' : '' }}"
+                    href="{{ route('items.index', ['page' => 'mylist']) }}">
                     マイリスト
                 </a>
             </div>
@@ -47,7 +49,11 @@
 
                     </a>
                 @empty
-                    <p>商品がありません。</p>
+                    @if (request('page') === 'mylist')
+                        <p>マイリストに商品がありません。</p>
+                    @else
+                        <p>商品がありません。</p>
+                    @endif
                 @endforelse
             </div>
 

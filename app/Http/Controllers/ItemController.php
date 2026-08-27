@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -12,12 +13,28 @@ class ItemController extends Controller
      */
     public function index(): View
     {
-        $products = Product::with([
-            'images',
-            'purchase',
-        ])
-            ->latest()
-            ->get();
+        if (request('page') === 'mylist') {
+            if (Auth::check()) {
+                $products = Product::with([
+                    'images',
+                    'purchase',
+                ])
+                    ->whereHas('likes', function ($query) {
+                        $query->where('user_id', Auth::id());
+                    })
+                    ->latest()
+                    ->get();
+            } else {
+                $products = collect();
+            }
+        } else {
+            $products = Product::with([
+                'images',
+                'purchase',
+            ])
+                ->latest()
+                ->get();
+        }
 
         return view('index', compact('products'));
     }
