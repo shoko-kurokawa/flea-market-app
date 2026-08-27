@@ -13,8 +13,12 @@
             <p class="verify-email__message">
                 登録していただいたメールアドレスに認証メールを送付しました。
                 <br>
-                メール内のリンクをクリックして、メール認証を完了してください。
+                メール内のリンクからメール認証を完了してください。
             </p>
+
+            <a class="verify-email__button" href="http://localhost:8025" target="_blank">
+                認証はこちらから
+            </a>
 
             @if (session('status') === 'verification-link-sent')
                 <p class="verify-email__success">
@@ -25,7 +29,7 @@
             <form class="verify-email__form" method="POST" action="{{ route('verification.send') }}">
                 @csrf
 
-                <button class="verify-email__button" type="submit">
+                <button class="verify-email__resend-button" type="submit">
                     認証メールを再送する
                 </button>
             </form>
