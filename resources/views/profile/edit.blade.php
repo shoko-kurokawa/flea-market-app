@@ -11,11 +11,17 @@
         <div class="profile__inner">
             <h1 class="profile__heading">プロフィール設定</h1>
 
-            <form class="profile-form" method="POST" enctype="multipart/form-data">
+            <form class="profile-form" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
 
                 <div class="profile-form__image">
-                    <div class="profile-form__image-preview"></div>
+                    <div class="profile-form__image-preview">
+                        @if ($user->profile_image)
+                            <img class="profile-form__image-current" src="{{ asset('storage/' . $user->profile_image) }}"
+                                alt="プロフィール画像">
+                        @endif
+                    </div>
 
                     <label class="profile-form__image-button" for="profile_image">
                         画像を選択する
@@ -35,7 +41,7 @@
                     </label>
 
                     <input class="profile-form__input" type="text" id="name" name="name"
-                        value="{{ old('name', auth()->user()->name) }}">
+                        value="{{ old('name', $user->name) }}">
 
                     @error('name')
                         <p class="profile-form__error">{{ $message }}</p>
@@ -48,7 +54,7 @@
                     </label>
 
                     <input class="profile-form__input" type="text" id="postal_code" name="postal_code"
-                        value="{{ old('postal_code') }}">
+                        value="{{ old('postal_code', $user->postal_code) }}">
 
                     @error('postal_code')
                         <p class="profile-form__error">{{ $message }}</p>
@@ -60,7 +66,8 @@
                         住所
                     </label>
 
-                    <input class="profile-form__input" type="text" id="address" name="address" value="{{ old('address') }}">
+                    <input class="profile-form__input" type="text" id="address" name="address"
+                        value="{{ old('address', $user->address) }}">
 
                     @error('address')
                         <p class="profile-form__error">{{ $message }}</p>
@@ -73,7 +80,7 @@
                     </label>
 
                     <input class="profile-form__input" type="text" id="building" name="building"
-                        value="{{ old('building') }}">
+                        value="{{ old('building', $user->building) }}">
                 </div>
 
                 <button class="profile-form__button" type="submit">

@@ -93,3 +93,86 @@
     border-radius: 50%;
     object-fit: cover;
 }
+.mypage__inner {
+    width: 100%;
+    padding: 60px 0 80px;
+}
+
+.mypage__profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    max-width: 900px;
+    margin: 0 auto 50px;
+}
+
+.mypage__user {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.mypage__image {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+}
+
+.mypage__image-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mypage__name {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.mypage__edit-button {
+    padding: 8px 20px;
+    border: 2px solid #ff5555;
+    border-radius: 5px;
+    color: #ff5555;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.mypage__tabs {
+    display: flex;
+    gap: 50px;
+    padding-left: 12%;
+    border-bottom: 1px solid #aaa;
+}
+
+.mypage__tab {
+    padding: 15px 0;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.mypage__products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    width: 90%;
+    margin: 40px auto 0;
+}
+
+.mypage__product-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: #eee;
+}
+
+.mypage__product-name {
+    margin: 8px 0 0;
+    font-size: 16px;
+}
