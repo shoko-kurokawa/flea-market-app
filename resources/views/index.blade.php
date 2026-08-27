@@ -10,18 +10,23 @@
     <div class="items">
         <div class="items__inner">
 
+            {{-- タブ --}}
             <div class="items__tabs">
-                <a class="items__tab {{ request('page') !== 'mylist' ? 'items__tab--active' : '' }}"
-                    href="{{ route('items.index') }}">
+                <a class="items__tab {{ request('page') !== 'mylist' ? 'items__tab--active' : '' }}" href="{{ route('items.index', [
+        'keyword' => request('keyword'),
+    ]) }}">
                     おすすめ
                 </a>
 
-                <a class="items__tab {{ request('page') === 'mylist' ? 'items__tab--active' : '' }}"
-                    href="{{ route('items.index', ['page' => 'mylist']) }}">
+                <a class="items__tab {{ request('page') === 'mylist' ? 'items__tab--active' : '' }}" href="{{ route('items.index', [
+        'page' => 'mylist',
+        'keyword' => request('keyword'),
+    ]) }}">
                     マイリスト
                 </a>
             </div>
 
+            {{-- 商品一覧 --}}
             <div class="items__list">
                 @forelse ($products as $product)
                     <a class="items__item" href="{{ route('items.show', $product) }}">
@@ -50,9 +55,13 @@
                     </a>
                 @empty
                     @if (request('page') === 'mylist')
-                        <p>マイリストに商品がありません。</p>
+                        <p>
+                            マイリストに商品がありません。
+                        </p>
                     @else
-                        <p>商品がありません。</p>
+                        <p>
+                            商品がありません。
+                        </p>
                     @endif
                 @endforelse
             </div>
