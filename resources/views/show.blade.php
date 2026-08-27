@@ -94,7 +94,7 @@
                         SOLD
                     </p>
                 @else
-                    <a class="item-detail__purchase-button" href="#">
+                    <a class="item-detail__purchase-button" href="{{ route('purchase.create', $product) }}">
                         購入手続きへ
                     </a>
                 @endif
