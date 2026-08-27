@@ -23,11 +23,11 @@ Route::get('/items/{product}', [ItemController::class, 'show'])
 
 /*
 |--------------------------------------------------------------------------
-| ログイン必須
+| ログイン必須+メール認証必須
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // プロフィール
     Route::get('/mypage', [ProfileController::class, 'index'])

@@ -13,30 +13,43 @@ class ItemController extends Controller
      */
     public function index(): View
     {
+        $keyword = request('keyword');
+
         if (request('page') === 'mylist') {
-            if (Auth::check()) {
-                $products = Product::with([
-                    'images',
-                    'purchase',
-                ])
-                    ->whereHas('likes', function ($query) {
-                        $query->where('user_id', Auth::id());
-                    })
-                    ->latest()
-                    ->get();
-            } else {
+            if (!Auth::check()) {
                 $products = collect();
+
+                return view('index', compact('products', 'keyword'));
             }
+
+            $products = Product::with([
+                'images',
+                'purchase',
+            ])
+                ->whereHas('likes', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })
+                ->when($keyword, function ($query, $keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                })
+                ->latest()
+                ->get();
         } else {
             $products = Product::with([
                 'images',
                 'purchase',
             ])
+                ->when(Auth::check(), function ($query) {
+                    $query->where('user_id', '!=', Auth::id());
+                })
+                ->when($keyword, function ($query, $keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                })
                 ->latest()
                 ->get();
         }
 
-        return view('index', compact('products'));
+        return view('index', compact('products', 'keyword'));
     }
 
     /**
