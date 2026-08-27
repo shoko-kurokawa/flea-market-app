@@ -45,7 +45,7 @@
                         <div class="mypage__product">
                             @if ($purchase->product->images->isNotEmpty())
                                 <img class="mypage__product-image"
-                                    src="{{ asset('storage/' . $purchase->product->images->first()->image_path) }}"
+                                    src="{{ asset('storage/' . $purchase->product->images->first()->image_url) }}"
                                     alt="{{ $purchase->product->name }}">
                             @endif
 
@@ -60,7 +60,7 @@
                     @forelse ($products as $product)
                         <div class="mypage__product">
                             @if ($product->images->isNotEmpty())
-                                <img class="mypage__product-image" src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                <img class="mypage__product-image" src="{{ asset('storage/' . $product->images->first()->image_url) }}"
                                     alt="{{ $product->name }}">
                             @endif
 

@@ -32,7 +32,7 @@
                             @if ($product->images->isNotEmpty())
                                 <img
                                     class="purchase__product-image"
-                                    src="{{ $product->images->first()->image_path }}"
+                                    src="{{ $product->images->first()->image_url }}"
                                     alt="{{ $product->name }}"
                                 >
                             @endif
