@@ -8,10 +8,26 @@ COACHTECH模擬案件としてフリマアプリを作成しました。
 
 ### Dockerビルド
 
-◆リポジトリをクローン
-git clone https://github.com/shoko-kurokawa/flea-market-app
+1. リポジトリをクローン
+   git clone https://github.com/shoko-kurokawa/flea-market-app
 
-◆
+2. プロジェクトディレクトリへ移動
+3. Composerパッケージをインストール
+   docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php85-composer:latest \
+    composer install --ignore-platform-reqs
+4. .env ファイルを作成
+5. Dockerコンテナを起動
+
+### Laravel環境構築
+
+1. アプリケーションキーを作成
+   ./vendor/bin/sail artisan key:generate
+2. マイグレーション・シーディングを実行
+   ./vendor/bin/sail artisan migrate:fresh --seed
 
 ## 使用技術
 
