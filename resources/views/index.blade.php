@@ -28,7 +28,7 @@
 
                         <div class="items__image-wrapper">
                             @if ($product->images->isNotEmpty())
-                                <img class="items__image" src="{{ $product->images->first()->image_path }}"
+                                <img class="items__image" src="{{ $product->images->first()->image_url }}"
                                     alt="{{ $product->name }}">
                             @endif
 

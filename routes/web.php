@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SellController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,4 +62,11 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/purchase/{product}/address', [AddressController::class, 'update'])
         ->name('purchase.address.update');
+
+    // 出品
+    Route::get('/sell', [SellController::class, 'create'])
+        ->name('sell.create');
+
+    Route::post('/sell', [SellController::class, 'store'])
+        ->name('sell.store');
 });

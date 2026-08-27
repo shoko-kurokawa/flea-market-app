@@ -13,8 +13,7 @@
             {{-- 商品画像 --}}
             <div class="item-detail__image-area">
                 @if ($product->images->isNotEmpty())
-                    <img class="item-detail__image" src="{{ $product->images->first()->image_path }}"
-                        alt="{{ $product->name }}">
+                    <img class="item-detail__image" src="{{ $product->images->first()->image_url }}" alt="{{ $product->name }}">
                 @endif
             </div>
 
