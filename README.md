@@ -2,25 +2,37 @@
 
 ## 概要
 
-COACHTECH模擬案件としてフリマアプリを作成した。
+COACHTECH模擬案件としてフリマアプリを作成しました。
 
 ## 環境構築
 
-※環境構築方法を整理
+### Dockerビルド
+
+◆リポジトリをクローン
+git clone https://github.com/shoko-kurokawa/flea-market-app
+
+◆
 
 ## 使用技術
 
-- PHP 8.2
+- PHP 8.5
 - Laravel 12.x
-- MySQL 8.0
-- nginx
+- MySQL 8.4
+- Laravel Fortify
+- Laravel Sail
+- Mailpit
 
 ## ER図
 
-- ※画像URL※
+<img width="7937" height="6853" alt="Image" src="https://github.com/user-attachments/assets/bafe53ec-a668-4895-8c2e-533eabf68ac6" />
 
 ## 開発環境
 
-- ユーザー登録画面: URL
-- ログイン画面: URL
-- phpMyAdmin: URL
+- 商品一覧画面：http://localhost/
+- 会員登録画面: http://localhost/register
+- ログイン画面: http://localhost/login
+- Mailpit：http://localhost:8025/
+
+## 作成者
+
+黒川尚子
