@@ -10,6 +10,7 @@
     <div class="item-detail">
         <div class="item-detail__inner">
 
+            {{-- 商品画像 --}}
             <div class="item-detail__image-area">
                 @if ($product->images->isNotEmpty())
                     <img class="item-detail__image" src="{{ $product->images->first()->image_path }}"
@@ -17,6 +18,7 @@
                 @endif
             </div>
 
+            {{-- 商品情報 --}}
             <div class="item-detail__content">
 
                 <h1 class="item-detail__name">
@@ -34,18 +36,59 @@
                     <span>（税込）</span>
                 </p>
 
+                {{-- いいね・コメント数 --}}
                 <div class="item-detail__actions">
+
+                    {{-- いいね --}}
                     <div class="item-detail__action">
-                        <span>♡</span>
-                        <span>{{ $product->likes->count() }}</span>
+                        @auth
+                            @php
+                                $isLiked = $product->likes->contains('user_id', auth()->id());
+                            @endphp
+
+                            @if ($isLiked)
+                                <form action="{{ route('likes.destroy', $product) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button class="item-detail__like-button item-detail__like-button--liked" type="submit">
+                                        ♥
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('likes.store', $product) }}" method="POST">
+                                    @csrf
+
+                                    <button class="item-detail__like-button" type="submit">
+                                        ♡
+                                    </button>
+                                </form>
+                            @endif
+                        @else
+                            <span class="item-detail__like-icon">
+                                ♡
+                            </span>
+                        @endauth
+
+                        <span class="item-detail__action-count">
+                            {{ $product->likes->count() }}
+                        </span>
                     </div>
 
+                    {{-- コメント数 --}}
                     <div class="item-detail__action">
-                        <span>💬</span>
-                        <span>{{ $product->comments->count() }}</span>
+                        <span class="item-detail__comment-icon">
+                            💬
+                        </span>
+
+                        <span class="item-detail__action-count">
+                            {{ $product->comments->count() }}
+                        </span>
                     </div>
+
                 </div>
 
+                {{-- 購入ボタン --}}
                 @if ($product->purchase)
                     <p class="item-detail__sold">
                         SOLD
@@ -56,6 +99,7 @@
                     </a>
                 @endif
 
+                {{-- 商品説明 --}}
                 <section class="item-detail__section">
                     <h2 class="item-detail__heading">
                         商品説明
@@ -66,6 +110,7 @@
                     </p>
                 </section>
 
+                {{-- 商品情報 --}}
                 <section class="item-detail__section">
                     <h2 class="item-detail__heading">
                         商品の情報
@@ -96,6 +141,7 @@
                     </div>
                 </section>
 
+                {{-- コメント一覧 --}}
                 <section class="item-detail__section">
                     <h2 class="item-detail__heading">
                         コメント（{{ $product->comments->count() }}）
@@ -105,11 +151,13 @@
                         <div class="item-detail__comment">
 
                             <div class="item-detail__comment-user">
-                                @if ($comment->user->profile_image)
-                                    <img class="item-detail__comment-image"
-                                        src="{{ asset('storage/' . $comment->user->profile_image) }}"
-                                        alt="{{ $comment->user->name }}">
-                                @endif
+                                <div class="item-detail__comment-user-image">
+                                    @if ($comment->user->profile_image)
+                                        <img class="item-detail__comment-image"
+                                            src="{{ asset('storage/' . $comment->user->profile_image) }}"
+                                            alt="{{ $comment->user->name }}">
+                                    @endif
+                                </div>
 
                                 <span>
                                     {{ $comment->user->name }}
@@ -124,6 +172,36 @@
                     @empty
                         <p>コメントはありません。</p>
                     @endforelse
+                </section>
+
+                {{-- コメント投稿 --}}
+                <section class="item-detail__section">
+                    <h2 class="item-detail__comment-heading">
+                        商品へのコメント
+                    </h2>
+
+                    @auth
+                        <form class="item-detail__comment-form" action="{{ route('comments.store', $product) }}" method="POST">
+                            @csrf
+
+                            <textarea class="item-detail__comment-textarea" name="comment"
+                                rows="5">{{ old('comment') }}</textarea>
+
+                            @error('comment')
+                                <p class="item-detail__error">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+
+                            <button class="item-detail__comment-button" type="submit">
+                                コメントを送信する
+                            </button>
+                        </form>
+                    @else
+                        <p>
+                            コメントを投稿するにはログインしてください。
+                        </p>
+                    @endauth
                 </section>
 
             </div>
